@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import {AngularFirestore} from '@angular/fire/compat/firestore';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,12 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'ecommerce-angular-app';
+
+  constructor(private fs: AngularFirestore){}
+
+  ngOnInit() {
+    this.fs.collection('test').snapshotChanges().subscribe(personas =>{
+      console.log(personas.map(elemento => elemento.payload.doc.data()))
+    });
+  }
 }
